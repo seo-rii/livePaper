@@ -21,7 +21,7 @@ const {BrowserWindow} = require('electron-acrylic-window')
 const os = require("os");
 
 
-let mainWindow, settingWindow
+let mainWindow = [], settingWindow
 
 function getHwnd(win) {
     if (!win) throw new TypeError('WINDOW_NOT_GIVEN')
@@ -37,10 +37,8 @@ function getHwnd(win) {
     }
 }
 
-function openMainWindow() {
-    mainWindow = new orgBrowserWindow({
-        width: 800,
-        height: 600,
+function openOneBackgroundWindow(scr) {
+    let win = new orgBrowserWindow({
         frame: false,
         show: false,
         webPreferences: {
@@ -48,14 +46,20 @@ function openMainWindow() {
             enableRemoteModule: true
         }
     })
-    mainWindow.loadURL(`file://${__dirname}/test.html`)
-    mainWindow.once('ready-to-show', () => {
-        mainWindow.show()
-        mainWindow.setBounds(screen.getPrimaryDisplay().bounds)
-        hookWindow(getHwnd(mainWindow))
-        mainWindow.show()
+    win.loadURL(`file://${__dirname}/test.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}`)
+    win.once('ready-to-show', () => {
+        win.show()
+        win.setBounds(scr.bounds)
+        hookWindow(getHwnd(win))
     })
-    //mainWindow.webContents.openDevTools({mode: "detach"})
+    //win.webContents.openDevTools({mode: "detach"})
+    mainWindow.push(win)
+}
+
+function openMainWindow() {
+    for (let i of screen.getAllDisplays()) {
+        openOneBackgroundWindow(i)
+    }
 }
 
 function createSettingWindow() {

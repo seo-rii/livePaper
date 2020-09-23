@@ -29,6 +29,7 @@
   "dependencies": {
     "bindings": "^1.5.0",
     "electron-acrylic-window": "^0.4.5",
+    "electron-settings": "^4.0.2",
     "node-addon-api": "^3.0.2",
     "node-gyp": "^7.1.0"
   },
