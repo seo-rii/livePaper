@@ -62,6 +62,14 @@ function openMainWindow() {
     }
 }
 
+function refresh() {
+    for (let i of mainWindow) {
+        i.close()
+    }
+    mainWindow = []
+    openMainWindow()
+}
+
 function createSettingWindow() {
     settingWindow = new BrowserWindow({
         width: 800,
@@ -80,9 +88,10 @@ function createSettingWindow() {
 function init() {
     openMainWindow()
     //createSettingWindow()
+    screen.on('display-metrics-changed', refresh);
 }
 
-app.on('ready', init)
+app.once('ready', init)
 
 app.on('window-all-closed', (e) => {
     e.preventDefault()
