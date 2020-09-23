@@ -1,0 +1,38 @@
+{
+  "name": "livepaper",
+  "version": "0.0.1",
+  "description": "Live Wallpaper",
+  "main": "index.js",
+  "scripts": {
+    "build": "node-gyp rebuild",
+    "install": "node-gyp rebuild",
+    "run": "electron index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Seo-Rii/livePaper.git"
+  },
+  "keywords": [
+    "wallpaper",
+    "electron",
+    "win10",
+    "windows10"
+  ],
+  "author": "SeoRii",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Seo-Rii/livePaper/issues",
+    "email": "studioSeoRii@gmail.com"
+  },
+  "homepage": "https://github.com/Seo-Rii/livePaper#readme",
+  "gypfile": true,
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "electron-acrylic-window": "^0.4.5",
+    "node-addon-api": "^3.0.2",
+    "node-gyp": "^7.1.0"
+  },
+  "devDependencies": {
+    "electron": "^10.1.1"
+  }
+}
