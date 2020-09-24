@@ -17,8 +17,11 @@ function loadModuleSafe() {
 
 const {hookWindow, unHookWindow} = loadModuleSafe()
 const {app, BrowserWindow: orgBrowserWindow, screen} = require('electron')
+app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors')
+app.commandLine.appendSwitch('disable-site-isolation-trials');
 const {BrowserWindow} = require('electron-acrylic-window')
-const os = require("os");
+const os = require('os')
+const path = require('path')
 
 
 let mainWindow = [], settingWindow
@@ -43,10 +46,17 @@ function openOneBackgroundWindow(scr) {
         show: false,
         webPreferences: {
             nodeIntegration: true,
-            enableRemoteModule: true
+            enableRemoteModule: true,
+            webSecurity: false
         }
-    })
-    win.loadURL(`file://${__dirname}/UI/main/video.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}`)
+    });
+    if ('video' === 'youtube') {
+        win.loadURL(`file://${__dirname}/UI/main/video.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}`)
+    }
+    if ('youtube' === 'youtube') {
+        let vid = 'UfEiKK-iX70'
+        win.loadURL(`file://${__dirname}/UI/main/youtube.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}&vid=${vid}`)
+    }
     win.once('ready-to-show', () => {
         win.show()
         win.setBounds(scr.bounds)

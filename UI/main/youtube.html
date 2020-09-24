@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>livePaper</title>
+    <link href="../css/background.css" rel="stylesheet">
+    <link href="../css/youtube.css" rel="stylesheet">
+</head>
+<body>
+<div id="player"></div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search)
+    const videoId = urlParams.get('vid')
+
+    let tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    let firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    let player;
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            videoId: videoId,
+            playerVars: {
+                'controls': 0,
+                'playlist': videoId,
+                'loop': 1,
+                'rel': 0,
+                'iv_load_policy': 3,
+                'disablekb': 1,
+                'fs': 0
+            },
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        const styleSheet = document.createElement('style')
+        styleSheet.type = 'text/css'
+        styleSheet.innerText = `
+            .ytp-ce-element {
+                display:none !important;
+            }
+        `
+        document.querySelector('iframe').contentDocument.head.appendChild(styleSheet)
+        document.querySelector('iframe').contentDocument.getElementsByClassName('ytp-chrome-top')[0].remove()
+        document.querySelector('iframe').contentDocument.getElementsByClassName('ytp-gradient-top')[0].remove()
+        let intv = setInterval(() => {
+            try {
+                if (document.querySelector('iframe').contentDocument.getElementsByClassName('ytp-watermark').length > 0) {
+                    document.querySelector('iframe').contentDocument.getElementsByClassName('ytp-watermark')[0].remove()
+                    clearInterval(intv)
+                }
+            } catch (e) {
+
+            }
+        }, 100)
+        //
+        event.target.mute()
+        event.target.playVideo()
+    }
+</script>
+</body>
+</html>
