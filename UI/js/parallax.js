@@ -1,7 +1,7 @@
 class Parallax {
     constructor(el, scale) {
+        const {screen} = require('electron').remote
         this.el = el
-        this.scale = scale
         this.P_toX = -scale / 2
         this.P_toY = -scale / 2
         this.P_orgX = -scale / 2

@@ -2,3 +2,9 @@ iframe {
     width: 100vw;
     height: 100vh;
 }
+
+#player {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}

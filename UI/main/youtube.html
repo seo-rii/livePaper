@@ -5,38 +5,48 @@
     <title>livePaper</title>
     <link href="../css/background.css" rel="stylesheet">
     <link href="../css/youtube.css" rel="stylesheet">
+    <script src="../js/parallax.js"></script>
 </head>
 <body>
 <div id="player"></div>
 
 <script>
+    const setting = require('electron-settings')
+
     const urlParams = new URLSearchParams(window.location.search)
-    const videoId = urlParams.get('vid')
+    const videoId = urlParams.get('vid'), videoStart = urlParams.get('start'), videoEnd = urlParams.get('end'), monitorId = urlParams.get('id')
 
-    let tag = document.createElement('script');
+    let tag = document.createElement('script')
 
-    tag.src = "https://www.youtube.com/iframe_api";
-    let firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    tag.src = "https://www.youtube.com/iframe_api"
+    let firstScriptTag = document.getElementsByTagName('script')[0]
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
 
-    let player;
+    let player
+    const parallaxOp = setting.getSync(`back.m_${monitorId}.parallax`)
 
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
             videoId: videoId,
             playerVars: {
                 'controls': 0,
-                'playlist': videoId,
-                'loop': 1,
                 'rel': 0,
                 'iv_load_policy': 3,
                 'disablekb': 1,
-                'fs': 0
+                'fs': 0,
+                'start': videoStart,
+                'end': videoEnd
             },
             events: {
-                'onReady': onPlayerReady
+                'onReady': onPlayerReady,
+                'onStateChange': (e) => {
+                    if (e.data === YT.PlayerState.ENDED) {
+                        player.playVideo();
+                    }
+                }
             }
-        });
+        })
+        if (parallaxOp.enable) new Parallax(document.getElementById('player'), parallaxOp.scale)
     }
 
     function onPlayerReady(event) {
@@ -61,6 +71,7 @@
         }, 100)
         //
         event.target.mute()
+        event.target.setLoop(true)
         event.target.playVideo()
     }
 </script>

@@ -9,7 +9,6 @@
 <body>
 <div id="back" style="margin:0;padding:0;overflow: hidden;position: fixed;width:100vw;height: 100vh;"></div>
 <script>
-    const {screen} = require('electron').remote
     const urlParams = new URLSearchParams(window.location.search)
     const setting = require('electron-settings')
     const x = urlParams.get('x'), y = urlParams.get('y'), monitorId = urlParams.get('id')
