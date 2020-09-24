@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="width:100vw;height:100vh;margin:0;padding:0;overflow: hidden;">
+<script src="../js/parallax.js"></script>
+<div id="back" style="margin:0;padding:0;overflow: hidden;position: fixed;"></div>
+<script>
+    const {screen} = require('electron').remote
+    const urlParams = new URLSearchParams(window.location.search)
+    const x = urlParams.get('x'), y = urlParams.get('y')
+    document.addEventListener('DOMContentLoaded', async () => {
+        const wallpaper = require('wallpaper')
+        const path = require('path')
+        document.getElementById('back').style.background = `url('${path.normalize(await wallpaper.get()).replaceAll('\\', '/')}') no-repeat center`
+        document.getElementById('back').style.backgroundSize = `cover`
+        setParallax(document.getElementById('back'), 15)
+    })
+</script>
+</body>
+</html>

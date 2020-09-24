@@ -46,7 +46,7 @@ function openOneBackgroundWindow(scr) {
             enableRemoteModule: true
         }
     })
-    win.loadURL(`file://${__dirname}/test.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}`)
+    win.loadURL(`file://${__dirname}/UI/main/image.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}`)
     win.once('ready-to-show', () => {
         win.show()
         win.setBounds(scr.bounds)
@@ -81,7 +81,7 @@ function createSettingWindow() {
         },
         vibrancy: 'appearance-based'
     })
-    settingWindow.loadURL(`file://${__dirname}/test.html`)
+    settingWindow.loadURL(`file://${__dirname}/UI/setting/main.html`)
     //settingWindow.webContents.openDevTools({mode: "detach"})
 }
 
