@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>livePaper</title>
+    <link href="../css/background.css" rel="stylesheet">
+</head>
+<body>
+<script>
+    const urlParams = new URLSearchParams(window.location.search)
+    const monitorId = urlParams.get('id')
+    const setting = require('electron-settings')
+    const opTemplate = {
+        type: 'image',
+        image: null,
+        youtubeId: 'UfEiKK-iX70',
+        parallax: {
+            enable: true,
+            scale: 10
+        }
+    }
+    const savedOp = setting.getSync(`back.m_${monitorId}`)
+    const currentOp = Object.assign(opTemplate, (typeof savedOp === "object" ? savedOp : Object()))
+    setting.setSync(`back.m_${monitorId}`, currentOp)
+    if (currentOp.type === 'image') {
+        const x = urlParams.get('x'), y = urlParams.get('y')
+        location.href = `image.html?id=${monitorId}&x=${x}&y=${y}`
+    }
+    if (currentOp.type === 'video') {
+        location.href = `video.html?id=${monitorId}`
+    }
+    if (currentOp.type === 'youtube') {
+        location.href = `youtube.html?id=${monitorId}&vid=${currentOp.youtubeId}`
+    }
+</script>
+</body>
+</html>

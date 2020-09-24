@@ -50,19 +50,13 @@ function openOneBackgroundWindow(scr) {
             webSecurity: false
         }
     });
-    if ('video' === 'youtube') {
-        win.loadURL(`file://${__dirname}/UI/main/video.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}`)
-    }
-    if ('youtube' === 'youtube') {
-        let vid = 'UfEiKK-iX70'
-        win.loadURL(`file://${__dirname}/UI/main/youtube.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}&vid=${vid}`)
-    }
+    win.loadURL(`file://${__dirname}/UI/main/main.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}`)
     win.once('ready-to-show', () => {
         win.show()
         win.setBounds(scr.bounds)
         hookWindow(getHwnd(win))
     })
-    //win.webContents.openDevTools({mode: "detach"})
+    win.webContents.openDevTools({mode: "detach"})
     mainWindow.push(win)
 }
 
