@@ -46,7 +46,7 @@ function openOneBackgroundWindow(scr) {
             enableRemoteModule: true
         }
     })
-    win.loadURL(`file://${__dirname}/UI/main/image.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}`)
+    win.loadURL(`file://${__dirname}/UI/main/video.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}`)
     win.once('ready-to-show', () => {
         win.show()
         win.setBounds(scr.bounds)
