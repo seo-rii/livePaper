@@ -11,14 +11,20 @@
 <script>
     const urlParams = new URLSearchParams(window.location.search)
     const setting = require('electron-settings')
-    const x = urlParams.get('x'), y = urlParams.get('y'), monitorId = urlParams.get('id')
+    const x = urlParams.get('x'), y = urlParams.get('y'), w = urlParams.get('w'), h = urlParams.get('h'),
+        monitorId = urlParams.get('id')
     const parallaxOp = setting.getSync(`back.m_${monitorId}.parallax`)
     document.addEventListener('DOMContentLoaded', async () => {
         const wallpaper = require('wallpaper')
         const path = require('path')
         document.getElementById('back').style.background = `url('${path.normalize(await wallpaper.get()).replaceAll('\\', '/')}') no-repeat center`
         document.getElementById('back').style.backgroundSize = `cover`
-        if (parallaxOp.enable) new Parallax(document.getElementById('back'), parallaxOp.scale)
+        if (parallaxOp.enable) new Parallax(document.getElementById('back'), parallaxOp.scale, {
+            width: w,
+            height: h,
+            left: x,
+            top: y
+        })
     })
 </script>
 </body>

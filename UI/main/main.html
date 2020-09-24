@@ -27,14 +27,15 @@
     const currentOp = Object.assign(opTemplate, (typeof savedOp === "object" ? savedOp : Object()))
     setting.setSync(`back.m_${monitorId}`, currentOp)
     if (currentOp.type === 'image') {
-        const x = urlParams.get('x'), y = urlParams.get('y')
-        location.href = `image.html?id=${monitorId}&x=${x}&y=${y}`
+        const x = urlParams.get('x'), y = urlParams.get('y'), w = urlParams.get('w'), h = urlParams.get('h')
+        location.href = `image.html?id=${monitorId}&x=${x}&y=${y}&w=${w}&h=${h}`
     }
     if (currentOp.type === 'video') {
         location.href = `video.html?id=${monitorId}`
     }
     if (currentOp.type === 'youtube') {
-        location.href = `youtube.html?id=${monitorId}&vid=${currentOp.youtube.videoId}${currentOp.youtube.start > 0 ? `&start=${currentOp.youtube.start}` : ''}${currentOp.youtube.end > 0 ? `&end=${currentOp.youtube.end}` : ''}`
+        const x = urlParams.get('x'), y = urlParams.get('y'), w = urlParams.get('w'), h = urlParams.get('h')
+        location.href = `youtube.html?id=${monitorId}&vid=${currentOp.youtube.videoId}${currentOp.youtube.start > 0 ? `&start=${currentOp.youtube.start}` : ''}${currentOp.youtube.end > 0 ? `&end=${currentOp.youtube.end}` : ''}&x=${x}&y=${y}&w=${w}&h=${h}`
     }
 </script>
 </body>

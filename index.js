@@ -40,7 +40,7 @@ function getHwnd(win) {
     }
 }
 
-function openOneBackgroundWindow(scr) {
+function openOneBackgroundWindow(scr, w, h) {
     let win = new orgBrowserWindow({
         frame: false,
         show: false,
@@ -50,7 +50,7 @@ function openOneBackgroundWindow(scr) {
             webSecurity: false
         }
     });
-    win.loadURL(`file://${__dirname}/UI/main/main.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}`)
+    win.loadURL(`file://${__dirname}/UI/main/main.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}&w=${w}&h=${h}`)
     win.once('ready-to-show', () => {
         win.show()
         win.setBounds(scr.bounds)
@@ -61,8 +61,13 @@ function openOneBackgroundWindow(scr) {
 }
 
 function openMainWindow() {
+    let w = 0, h = 0;
     for (let i of screen.getAllDisplays()) {
-        openOneBackgroundWindow(i)
+        w = Math.max(w, i.bounds.x + i.bounds.width)
+        h = Math.max(h, i.bounds.y + i.bounds.height)
+    }
+    for (let i of screen.getAllDisplays()) {
+        openOneBackgroundWindow(i, w, h)
     }
 }
 

@@ -14,7 +14,9 @@
     const setting = require('electron-settings')
 
     const urlParams = new URLSearchParams(window.location.search)
-    const videoId = urlParams.get('vid'), videoStart = urlParams.get('start'), videoEnd = urlParams.get('end'), monitorId = urlParams.get('id')
+    const videoId = urlParams.get('vid'), videoStart = urlParams.get('start'), videoEnd = urlParams.get('end'),
+        monitorId = urlParams.get('id')
+    const x = urlParams.get('x'), y = urlParams.get('y'), w = urlParams.get('w'), h = urlParams.get('h')
 
     let tag = document.createElement('script')
 
@@ -46,7 +48,12 @@
                 }
             }
         })
-        if (parallaxOp.enable) new Parallax(document.getElementById('player'), parallaxOp.scale)
+        if (parallaxOp.enable) new Parallax(document.getElementById('player'), parallaxOp.scale, {
+            width: w,
+            height: h,
+            left: x,
+            top: y
+        })
     }
 
     function onPlayerReady(event) {

@@ -1,5 +1,5 @@
 class Parallax {
-    constructor(el, scale) {
+    constructor(el, scale, bound) {
         const {screen} = require('electron').remote
         this.el = el
         this.P_toX = -scale / 2
@@ -10,9 +10,11 @@ class Parallax {
         this.el.style.top = '0px'
         this.el.style.width = (100 + scale) + 'vw'
         this.el.style.height = (100 + scale) + 'vh'
+        this.w = bound.width
+        this.h = bound.height
         setInterval(() => {
-            this.P_toX = screen.getCursorScreenPoint().x / window.innerWidth * scale - scale
-            this.P_toY = screen.getCursorScreenPoint().y / window.innerWidth * scale - scale
+            this.P_toX = screen.getCursorScreenPoint().x / this.w * scale - scale
+            this.P_toY = screen.getCursorScreenPoint().y / this.h * scale - scale
         }, 10)
         requestAnimationFrame(() => this.parallax_intv())
     }
