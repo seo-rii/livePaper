@@ -1,0 +1,48 @@
+#titlebar {
+    color: #ffffff;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    color: #ffffff;
+}
+
+#body {
+    background: black;
+}
+
+::-webkit-scrollbar-track {
+    background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.button {
+    background: #444444;
+}
+
+.button:hover {
+    box-shadow: 0 0 0 3px #888 inset;
+}
+
+label {
+    box-shadow: 0 0 0 2px #fff inset;
+}
+
+label:after {
+    background: #fff;
+}
+
+input:checked + label:after {
+    background: #fff;
+}
+
+input:active + label:after {
+    background: #fff;
+}

@@ -21,7 +21,8 @@ app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors')
 app.commandLine.appendSwitch('disable-site-isolation-trials');
 const {BrowserWindow} = require('electron-acrylic-window')
 const os = require('os')
-const path = require('path')
+const w32disp = require("win32-displayconfig")
+const setting = require('electron-settings')
 
 
 let mainWindow = [], settingWindow
@@ -40,7 +41,7 @@ function getHwnd(win) {
     }
 }
 
-function openOneBackgroundWindow(scr, w, h) {
+function openOneBackgroundWindow(id, bound, totalWidth, totalHeight) {
     let win = new orgBrowserWindow({
         frame: false,
         show: false,
@@ -50,25 +51,51 @@ function openOneBackgroundWindow(scr, w, h) {
             webSecurity: false
         }
     });
-    win.loadURL(`file://${__dirname}/UI/main/main.html?id=${scr.id}&x=${scr.bounds.x}&y=${scr.bounds.y}&w=${w}&h=${h}`)
+    win.loadURL(`file://${__dirname}/UI/main/main.html?id=${id}&x=${bound.x}&y=${bound.y}&w=${totalWidth}&h=${totalHeight}`)
     win.once('ready-to-show', () => {
         win.show()
-        win.setBounds(scr.bounds)
+        win.setBounds(bound)
         hookWindow(getHwnd(win))
     })
-    win.webContents.openDevTools({mode: "detach"})
+    //win.webContents.openDevTools({mode: "detach"})
     mainWindow.push(win)
 }
 
 function openMainWindow() {
-    let w = 0, h = 0;
-    for (let i of screen.getAllDisplays()) {
-        w = Math.max(w, i.bounds.x + i.bounds.width)
-        h = Math.max(h, i.bounds.y + i.bounds.height)
-    }
-    for (let i of screen.getAllDisplays()) {
-        openOneBackgroundWindow(i, w, h)
-    }
+    let totalWidth = 0, totalHeight = 0
+    w32disp.extractDisplayConfig().then((displayList) => {
+        for (let i of displayList) {
+            let BottomRightPoint = {
+                x: i.sourceMode.position.x + i.sourceMode.width,
+                y: i.sourceMode.position.y + i.sourceMode.height
+            }
+
+            BottomRightPoint = screen.screenToDipPoint(BottomRightPoint)
+            totalWidth = Math.max(totalWidth, BottomRightPoint.x)
+            totalHeight = Math.max(totalHeight, BottomRightPoint.y)
+        }
+        for (let i of displayList) {
+            let TopLeftPoint = {
+                x: i.sourceMode.position.x,
+                y: i.sourceMode.position.y
+            }, BottomRightPoint = {
+                x: i.sourceMode.position.x + i.sourceMode.width,
+                y: i.sourceMode.position.y + i.sourceMode.height
+            }
+
+            TopLeftPoint = screen.screenToDipPoint(TopLeftPoint)
+            BottomRightPoint = screen.screenToDipPoint(BottomRightPoint)
+
+            setting.setSync(`back.m_${Buffer.from(i.devicePath).toString('base64')}.displayName`, i.displayName)
+
+            openOneBackgroundWindow(Buffer.from(i.devicePath).toString('base64'), {
+                x: TopLeftPoint.x,
+                y: TopLeftPoint.y,
+                width: BottomRightPoint.x - TopLeftPoint.x,
+                height: BottomRightPoint.y - TopLeftPoint.y
+            }, totalWidth, totalHeight)
+        }
+    })
 }
 
 function refresh() {
@@ -90,13 +117,13 @@ function createSettingWindow() {
         },
         vibrancy: 'appearance-based'
     })
-    settingWindow.loadURL(`file://${__dirname}/UI/setting/main.html`)
+    settingWindow.loadURL(`file://${__dirname}/UI/setting/setting.html`)
     //settingWindow.webContents.openDevTools({mode: "detach"})
 }
 
 function init() {
     openMainWindow()
-    //createSettingWindow()
+    createSettingWindow()
     screen.on('display-metrics-changed', refresh);
 }
 

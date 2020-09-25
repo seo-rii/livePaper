@@ -1,0 +1,45 @@
+.button {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    width: fit-content;
+}
+
+.button.--fluent-click {
+    box-shadow: none !important;
+    transform: perspective(125px) rotateX(var(--fluent-rotate)) scale(0.92);
+}
+
+.button.--fluent-release {
+    box-shadow: none !important;
+    animation: clickButton 0.5s;
+}
+
+@keyframes clickButton {
+    0% {
+        transform: perspective(125px) rotateX(var(--fluent-rotate)) scale(0.92);
+    }
+    100% {
+
+    }
+}
+
+.item.--fluent-click {
+    box-shadow: none !important;
+    transform: perspective(125px) rotateX(var(--fluent-rotate)) scale(0.95);
+}
+
+.item.--fluent-release {
+    box-shadow: none !important;
+    animation: clickItem 0.5s;
+}
+
+@keyframes clickItem {
+    0% {
+        transform: perspective(125px) rotateX(var(--fluent-rotate)) scale(0.95);
+    }
+    100% {
+
+    }
+}

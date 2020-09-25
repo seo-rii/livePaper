@@ -18,21 +18,52 @@
     "win10",
     "windows10"
   ],
-  "author": "SeoRii",
+  "author": "SeoRii <studioSeoRii@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Seo-Rii/livePaper/issues",
     "email": "studioSeoRii@gmail.com"
   },
+  "build": {
+    "productName": "livePaper",
+    "appId": "seorii.youtil.livePaper",
+    "artifactName": "livePaper.${ext}",
+    "directories": {
+      "output": "build"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "NSIS",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "./res/logo.ico"
+    },
+    "nsis": {
+      "createStartMenuShortcut": true
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Seo-Rii",
+        "repo": "livePaper"
+      }
+    ]
+  },
   "homepage": "https://github.com/Seo-Rii/livePaper#readme",
   "gypfile": true,
   "dependencies": {
     "bindings": "^1.5.0",
-    "electron-acrylic-window": "^0.4.5",
+    "electron-acrylic-window": "^0.4.7",
     "electron-settings": "^4.0.2",
     "node-addon-api": "^3.0.2",
     "node-gyp": "^7.1.0",
-    "wallpaper": "^4.4.1"
+    "wallpaper": "^4.4.1",
+    "electron-updater": "^4.3.5",
+    "win32-displayconfig": "^0.1.0"
   },
   "devDependencies": {
     "electron": "^10.1.1"

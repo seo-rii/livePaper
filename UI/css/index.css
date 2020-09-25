@@ -1,0 +1,102 @@
+.btn-flat {
+    color: black;
+}
+
+input {
+    border-bottom: 1px solid black !important;
+    box-shadow: 0 1px 0 0 black !important;
+}
+
+label {
+    color: black !important;
+}
+
+:root {
+    --theme-color: #000000;
+    --fluent-rotate: 0deg;
+}
+
+.sideInd.active {
+    background: var(--theme-color);
+}
+
+.section {
+    padding: 0 20px 0 20px !important;
+}
+
+#sideBar {
+    position: absolute;
+    width: 320px;
+    margin-top: 32px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: calc(100vh - 32px);
+    left: 0;
+    top: 0;
+}
+
+#sideBar::-webkit-scrollbar-track {
+    background: #00000000;
+}
+
+#sideBar .item {
+    width: 100%;
+    height: 50px;
+    padding: 7px 10px 10px 20px;
+    font-size: 15px;
+}
+
+#sideBar .item:hover {
+    background: #ffffff22;
+}
+
+.item .icon {
+    margin-right: 15px;
+    margin-top: 3px;
+    font-size: 20px;
+    position: relative;
+    top: -19px;
+}
+
+.item .text {
+    position: relative;
+    top: -23px;
+}
+
+.sideInd {
+    position: relative;
+    left: -20px;
+    top: 7px;
+    height: calc(100% - 10px);
+    width: 5px;
+    transition: none;
+}
+
+.icon {
+    font-family: "Segoe MDL2 Assets";
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+
+.fold {
+    display: none;
+}
+
+.fold.open {
+    display: block;
+}
+
+a {
+    cursor: pointer;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}

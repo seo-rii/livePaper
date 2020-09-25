@@ -25,7 +25,6 @@
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
 
     let player
-    const parallaxOp = setting.getSync(`back.m_${monitorId}.parallax`)
 
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
@@ -48,6 +47,7 @@
                 }
             }
         })
+        const parallaxOp = setting.getSync(`back.m_${monitorId}.parallax`)
         if (parallaxOp.enable) new Parallax(document.getElementById('player'), parallaxOp.scale, {
             width: w,
             height: h,
