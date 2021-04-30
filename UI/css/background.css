@@ -1,7 +1,17 @@
 body {
     width: 100vw !important;
     height: 100vh !important;
-    padding: 0 !important;
-    margin: 0 !important;
     overflow: hidden !important;
+    position: absolute;
+}
+
+#back {
+    overflow: hidden !important;
+    position: absolute;
+}
+
+#effect {
+    overflow: hidden !important;
+    z-index: 1;
+    position: absolute;
 }

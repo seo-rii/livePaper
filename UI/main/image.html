@@ -5,9 +5,12 @@
     <title>livePaper</title>
     <link href="../css/background.css" rel="stylesheet">
     <script src="../js/parallax.js"></script>
+
+    <script src="../js/backEffect/glow.js"></script>
 </head>
 <body>
-<div id="back" style="margin:0;padding:0;overflow: hidden;position: fixed;width:100vw;height: 100vh;"></div>
+<div id="back"></div>
+<canvas id="effect"></canvas>
 <script>
     const urlParams = new URLSearchParams(window.location.search)
     const setting = require('electron-settings')
@@ -19,12 +22,21 @@
         const parallaxOp = setting.getSync(`back.m_${monitorId}.parallax`)
         document.getElementById('back').style.background = `url('${path.normalize(await wallpaper.get()).replaceAll('\\', '/')}') no-repeat center`
         document.getElementById('back').style.backgroundSize = `cover`
-        if (parallaxOp.enable) new Parallax(document.getElementById('back'), parallaxOp.scale, {
-            width: w,
-            height: h,
-            left: x,
-            top: y
-        })
+        if (parallaxOp.enable) {
+            new Parallax(document.getElementById('back'), parallaxOp.scale, {
+                width: w,
+                height: h,
+                left: x,
+                top: y
+            })
+            new Parallax(document.getElementById('effect'), 10, {
+                width: w,
+                height: h,
+                left: x,
+                top: y
+            })
+            applyStarEffect(500)
+        }
     })
 </script>
 </body>

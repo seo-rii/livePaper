@@ -57,7 +57,7 @@ function openOneBackgroundWindow(id, bound, totalWidth, totalHeight) {
         win.setBounds(bound)
         hookWindow(getHwnd(win))
     })
-    //win.webContents.openDevTools({mode: "detach"})
+    win.webContents.openDevTools({mode: "detach"})
     mainWindow.push(win)
 }
 
@@ -123,7 +123,7 @@ function createSettingWindow() {
 
 function init() {
     openMainWindow()
-    createSettingWindow()
+    //createSettingWindow()
     screen.on('display-metrics-changed', refresh);
 }
 

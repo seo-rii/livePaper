@@ -13,8 +13,8 @@ class Parallax {
         this.w = bound.width
         this.h = bound.height
         setInterval(() => {
-            this.P_toX = screen.getCursorScreenPoint().x / this.w * scale - scale
-            this.P_toY = screen.getCursorScreenPoint().y / this.h * scale - scale
+            this.P_toX = screen.screenToDipPoint(screen.getCursorScreenPoint()).x / this.w * scale - scale
+            this.P_toY = screen.screenToDipPoint(screen.getCursorScreenPoint()).y / this.h * scale - scale
         }, 10)
         requestAnimationFrame(() => this.parallax_intv())
     }
@@ -24,14 +24,14 @@ class Parallax {
         let dY = this.P_toY - this.P_orgY
         if (Math.abs(dX) > 1) dX /= 30
         else if (Math.abs(dX) > 0.5) dX /= 25
-        else if (Math.abs(dX) > 0.05) dX /= 20
+        else dX /= 20
         if (Math.abs(dY) > 1) dY /= 30
         else if (Math.abs(dY) > 0.5) dY /= 25
-        else if (Math.abs(dY) > 0.05) dY /= 20
+        else dY /= 20
         this.P_orgX = ((this.P_orgX + dX))
         this.P_orgY = ((this.P_orgY + dY))
-        this.el.style.left = this.P_orgX + 'vw'
-        this.el.style.top = this.P_orgY + 'vh'
+        this.el.style.marginLeft = this.P_orgX + 'vw'
+        this.el.style.marginTop = this.P_orgY + 'vh'
         requestAnimationFrame(() => this.parallax_intv())
     }
 }
